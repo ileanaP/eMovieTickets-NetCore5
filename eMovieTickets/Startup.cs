@@ -75,6 +75,7 @@ namespace eMovieTickets
 
             // Seed database
             AppDbInitializer.Seed(app);
+            AppDbInitializer.SeedUsersAndRolesAsync(app).Wait();
         }
     }
 }
