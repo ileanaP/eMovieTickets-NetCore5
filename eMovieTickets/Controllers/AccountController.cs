@@ -4,6 +4,7 @@ using eMovieTickets.Data.ViewModels;
 using eMovieTickets.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,12 @@ namespace eMovieTickets.Controllers
         }
 
         public IActionResult Login() => View(new LoginVM());
+
+        public async Task<IActionResult> Users()
+        {
+            var users = await _context.Users.ToListAsync();
+            return View(users);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginVM loginVM)
@@ -85,6 +92,11 @@ namespace eMovieTickets.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Movies");
+        }
+
+        public IActionResult AccessDenied(string ReturnUrl)
+        {
+            return View();
         }
     }
 }
